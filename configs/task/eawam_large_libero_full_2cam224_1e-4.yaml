@@ -1,0 +1,13 @@
+# @package _global_
+
+defaults:
+  - eawam_large_libero_2cam224_1e-4
+  - _self_
+
+# Train the isolated 38M-parameter extension on every LIBERO window.
+max_train_samples: null
+num_epochs: 3
+proposal_cache_path: null
+proposal_cache_shard_size: 512
+save_every_epochs: 1
+output_dir: ./runs/eawam/libero_full_rar512x8_3epoch_${now:%Y-%m-%d}_${now:%H-%M-%S}

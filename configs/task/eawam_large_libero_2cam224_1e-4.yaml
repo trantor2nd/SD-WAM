@@ -1,0 +1,16 @@
+# @package _global_
+
+defaults:
+  - eawam_libero_2cam224_1e-4
+  - _self_
+
+# Keep LDE/TEM at 256 and enlarge only the residual action DiT.
+model:
+  module:
+    rar_hidden_dim: 512
+    rar_layers: 8
+    num_heads: 8
+
+# Reuse the exact same frozen ten-step proposals as the 256x4 run.
+proposal_cache_path: ./runs/eawam/libero_fullproposal_30epoch_512_20260717_232306/frozen_base_proposals_steps10.pt
+output_dir: ./runs/eawam/libero_rar512x8_30epoch_${now:%Y-%m-%d}_${now:%H-%M-%S}

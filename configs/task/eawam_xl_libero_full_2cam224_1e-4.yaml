@@ -1,0 +1,17 @@
+# @package _global_
+
+defaults:
+  - eawam_large_libero_full_2cam224_1e-4
+  - _self_
+
+# Large RAR configuration for the extension-only LIBERO training run.
+model:
+  module:
+    rar_hidden_dim: 768
+    rar_layers: 12
+    num_heads: 8
+
+num_epochs: 10
+proposal_cache_path: null
+proposal_cache_shard_size: 512
+output_dir: ./runs/eawam/libero_full_rar768x12_10epoch_${now:%Y-%m-%d}_${now:%H-%M-%S}

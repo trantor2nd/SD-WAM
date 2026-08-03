@@ -1,0 +1,26 @@
+# @package _global_
+
+defaults:
+  - eawam_xl_libero_full_2cam224_1e-4
+  - _self_
+
+model:
+  _target_: extensions.eawam_continuation.runtime.create_eawam_continuation
+  module:
+    hidden_dim: 256
+    lde_layers: 2
+    rar_hidden_dim: 768
+    rar_layers: 12
+    num_heads: 8
+    residual_scale: 1.0
+    action_noise_std: 0.005
+    velocity_scale: 0.1
+    gripper_velocity_scale: 1.0
+    max_gripper_correction: 2.0
+    temporal_shift_augmentation: false
+
+batch_size: 64
+proposal_batch_size: 64
+num_epochs: 10
+save_every_epochs: 1
+output_dir: ./runs/eawam_continuation/libero_full_v3_${now:%Y-%m-%d}_${now:%H-%M-%S}

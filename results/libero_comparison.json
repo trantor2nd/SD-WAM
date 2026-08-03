@@ -1,0 +1,46 @@
+{
+  "protocol": {
+    "suites": 4,
+    "tasks_per_suite": 10,
+    "trials_per_task": 50,
+    "total_episodes": 2000
+  },
+  "fastwam": {
+    "checkpoint": "checkpoints/fastwam_release/libero_uncond_2cam224.pt",
+    "successes": 1935,
+    "total_episodes": 2000,
+    "success_rate": 0.9675,
+    "per_suite": {
+      "libero_spatial": 490,
+      "libero_object": 496,
+      "libero_goal": 484,
+      "libero_10": 465
+    }
+  },
+  "eawam_continuation_v3": {
+    "checkpoint": "eawam_epoch_01.pt",
+    "checkpoint_sha256": "b11dfa589660cf02e57ac3076a934422d4b512f862131367744e0778aaae391f",
+    "arm_scale": 0.05,
+    "gripper_scale": 0.0,
+    "successes": 1935,
+    "total_episodes": 2000,
+    "success_rate": 0.9675,
+    "per_suite": {
+      "libero_spatial": 490,
+      "libero_object": 491,
+      "libero_goal": 483,
+      "libero_10": 471
+    }
+  },
+  "previous_residual_eawam": {
+    "successes": 1933,
+    "total_episodes": 2000,
+    "success_rate": 0.9665,
+    "per_suite": {
+      "libero_spatial": 488,
+      "libero_object": 494,
+      "libero_goal": 483,
+      "libero_10": 468
+    }
+  }
+}

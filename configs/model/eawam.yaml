@@ -1,0 +1,89 @@
+_target_: extensions.eawam.runtime.create_eawam
+_recursive_: false
+
+base_checkpoint: ./checkpoints/fastwam_release/libero_uncond_2cam224.pt
+load_text_encoder: false
+skip_dit_load_from_pretrain: true
+action_dit_pretrained_path: null
+
+base_model:
+  _target_: fastwam.runtime.create_fastwam
+  model_id: Wan-AI/Wan2.2-TI2V-5B
+  tokenizer_model_id: Wan-AI/Wan2.1-T2V-1.3B
+  tokenizer_max_len: 128
+  load_text_encoder: false
+  proprio_dim: ${data.train.processor.proprio_output_dim}
+  redirect_common_files: true
+  mot_checkpoint_mixed_attn: false
+  action_dit_pretrained_path: null
+  skip_dit_load_from_pretrain: true
+
+  video_dit_config:
+    has_image_input: false
+    patch_size: [1, 2, 2]
+    in_dim: 48
+    hidden_dim: 3072
+    ffn_dim: 14336
+    freq_dim: 256
+    text_dim: 4096
+    out_dim: 48
+    num_heads: 24
+    attn_head_dim: 128
+    num_layers: 30
+    eps: 1.0e-06
+    seperated_timestep: true
+    require_clip_embedding: false
+    require_vae_embedding: false
+    fuse_vae_embedding_in_latents: true
+    use_gradient_checkpointing: false
+    video_attention_mask_mode: first_frame_causal
+    action_conditioned: false
+    action_dim: ${data.train.processor.action_output_dim}
+    action_group_causal_mask_mode: group_diagonal
+
+  action_dit_config:
+    action_dim: ${data.train.processor.action_output_dim}
+    hidden_dim: 1024
+    ffn_dim: 4096
+    num_heads: 24
+    attn_head_dim: 128
+    num_layers: 30
+    text_dim: 4096
+    freq_dim: 256
+    eps: 1.0e-06
+    use_gradient_checkpointing: false
+
+  video_scheduler:
+    train_shift: 5.0
+    infer_shift: 5.0
+    num_train_timesteps: 1000
+
+  action_scheduler:
+    train_shift: 5.0
+    infer_shift: 5.0
+    num_train_timesteps: 1000
+
+  loss:
+    lambda_action: 1.0
+
+# The paper does not disclose these architecture and augmentation values.
+# They are explicit here so the reproduction remains auditable.
+module:
+  latent_dim: 48
+  hidden_dim: 256
+  num_error_tokens: 4
+  lde_layers: 2
+  rar_layers: 4
+  num_heads: 8
+  ffn_multiplier: 4
+  max_visual_tokens: 196
+  max_action_horizon: 32
+  refine_horizon: 8
+  feedback_frame_index: 2
+  latent_noise_std: 0.02
+  action_noise_std: 0.01
+  noise_clip: 2.0
+  max_residual: 0.25
+  proposal_inference_steps: 10
+  residual_zero_start: true
+  residual_scale: 0.4

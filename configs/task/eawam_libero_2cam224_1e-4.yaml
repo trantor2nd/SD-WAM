@@ -1,0 +1,29 @@
+# @package _global_
+
+defaults:
+  - override /data: libero_2cam
+  - override /model: eawam
+  - _self_
+
+batch_size: 2
+proposal_batch_size: 32
+num_workers: 4
+learning_rate: 1.0e-4
+weight_decay: 1.0e-2
+num_epochs: 30
+gradient_accumulation_steps: 1
+max_grad_norm: 1.0
+mixed_precision: bf16
+seed: 42
+log_every: 10
+save_every_epochs: 5
+
+# Fast turnaround reproduction split. Set null for every available training
+# window; the four LIBERO suites remain jointly represented by even sampling.
+max_train_samples: 512
+output_dir: ./runs/eawam/libero_30epoch_full_proposal_${now:%Y-%m-%d}_${now:%H-%M-%S}
+resume_extension: null
+
+data:
+  train:
+    pretrained_norm_stats: ./checkpoints/fastwam_release/libero_uncond_2cam224_dataset_stats.json
